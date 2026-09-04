@@ -1,0 +1,7 @@
+2026-08-28 03:00:05 | OK | branch=lint-sweep-20260828 verdict=PASS pr=True fixed_files=1 cost~$0.00498
+2026-08-29 03:00:04 | OK | branch=lint-sweep-20260829 verdict=PASS pr=True fixed_files=0 cost~$0.00312
+2026-08-30 03:00:11 | FAIL | RuntimeError: reviewer timed out after 30s scanning vendor/ directory (12,000+ files)
+2026-08-31 03:00:06 | OK | branch=lint-sweep-20260831 verdict=PASS pr=True fixed_files=1 cost~$0.00501
+2026-09-01 03:00:04 | OK | branch=lint-sweep-20260901 verdict=PASS pr=True fixed_files=0 cost~$0.00310
+2026-09-02 03:00:13 | FAIL | RuntimeError: reviewer timed out after 30s scanning vendor/ directory (12,000+ files)
+2026-09-03 03:00:05 | OK | branch=lint-sweep-20260903 verdict=PASS pr=True fixed_files=2 cost~$0.00623
