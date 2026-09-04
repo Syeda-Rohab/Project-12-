@@ -1,0 +1,44 @@
+name: Dreaming Loop
+
+on:
+  schedule:
+    - cron: "0 3 * * 1"   # every Monday at 3am UTC
+  workflow_dispatch:        # allows a manual one-off run too
+
+jobs:
+  dream:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config user.email "dreaming-loop@example.com"
+          git config user.name "Dreaming Loop"
+
+      - name: Run the dreaming loop
+        id: dream
+        run: |
+          python dreaming_loop.py | tee dream_output.txt
+          BRANCH=$(git branch --show-current)
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+
+      - name: Push the proposal branch (only if one was created)
+        if: steps.dream.outputs.branch != 'main'
+        run: git push origin ${{ steps.dream.outputs.branch }}
+
+      - name: Open the PR (only if a proposal branch exists)
+        if: steps.dream.outputs.branch != 'main'
+        run: |
+          gh pr create \
+            --title "Dreaming loop: rules update proposal" \
+            --body-file PR_DRAFT.md \
+            --base main \
+            --head ${{ steps.dream.outputs.branch }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
